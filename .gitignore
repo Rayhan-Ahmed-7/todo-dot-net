@@ -1,0 +1,46 @@
+# Build Folders
+bin/
+obj/
+
+# User Secrets
+secrets.json
+
+# Visual Studio
+.vscode/
+*.sln.ide
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Rider
+.idea/
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Backup files
+*.bak
+*.swp
+
+# Others
+*.db
+*.log
+*.pdb
+*.mdb
+*.suo
+*.user
+*.userprefs
+*.sln.docstates
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# NCrunch
+_NCrunch_*
+*.ncrunch*
