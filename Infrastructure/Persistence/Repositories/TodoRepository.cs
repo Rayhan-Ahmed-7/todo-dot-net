@@ -1,48 +1,76 @@
-using TodoApp.Domain.Todo.Entities;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using TodoApp.Application.Todo.DTOs;
 using TodoApp.Application.Todo.Interfaces;
+using TodoApp.Domain.Todo.Entities;
 using TodoApp.Infrastructure.Persistence.DbContexts;
 
 namespace TodoApp.Infrastructure.Repositories
 {
-    public class TodoRepository : ITodoRepository
+    public class TodoRepository : ITodoService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public TodoRepository(ApplicationDbContext context)
+        public TodoRepository(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public async Task<Todo> CreateAsync(Todo todo)
+        public async Task<TodoDto> CreateTodoAsync(CreateTodoDto createTodoDto)
         {
-            await _context.Todos.AddAsync(todo);
+            // Map DTO to entity
+            var todoEntity = _mapper.Map<Todo>(createTodoDto);
+
+            // Save to the database
+            await _context.Todos.AddAsync(todoEntity);
             await _context.SaveChangesAsync();
-            return todo;
+
+            // Map entity to DTO and return
+            return _mapper.Map<TodoDto>(todoEntity);
         }
 
-        public async Task<Todo> GetByIdAsync(int id)
+        public async Task<TodoDto> GetTodoByIdAsync(int id)
         {
-            return await _context.Todos.FindAsync(id);
-        }
-
-        public async Task<List<Todo>> GetAllAsync()
-        {
-            return await _context.Todos.ToListAsync();
-        }
-
-        public async Task<Todo> UpdateAsync(Todo todo)
-        {
-            _context.Todos.Update(todo);
-            await _context.SaveChangesAsync();
-            return todo;
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            var todo = await GetByIdAsync(id);
-            if (todo != null)
+            var todoEntity = await _context.Todos.FindAsync(id);
+            if (todoEntity == null)
             {
-                _context.Todos.Remove(todo);
+                return null; // Or throw a custom exception
+            }
+
+            return _mapper.Map<TodoDto>(todoEntity);
+        }
+
+        public async Task<List<TodoDto>> GetAllTodosAsync()
+        {
+            var todoEntities = await _context.Todos.ToListAsync();
+            return _mapper.Map<List<TodoDto>>(todoEntities);
+        }
+
+        public async Task<TodoDto> UpdateTodoAsync(int id, UpdateTodoDto updateTodoDto)
+        {
+            var todoEntity = await _context.Todos.FindAsync(id);
+            if (todoEntity == null)
+            {
+                return null; // Or throw a custom exception
+            }
+
+            // Map updated fields from DTO to entity
+            _mapper.Map(updateTodoDto, todoEntity);
+
+            _context.Todos.Update(todoEntity);
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<TodoDto>(todoEntity);
+        }
+
+        public async Task DeleteTodoAsync(int id)
+        {
+            var todoEntity = await _context.Todos.FindAsync(id);
+            if (todoEntity != null)
+            {
+                _context.Todos.Remove(todoEntity);
                 await _context.SaveChangesAsync();
             }
         }

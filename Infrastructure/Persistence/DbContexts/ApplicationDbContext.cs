@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TodoApp.Domain.Todo.Entities;
 
 namespace TodoApp.Infrastructure.Persistence.DbContexts
 {
@@ -7,7 +8,6 @@ namespace TodoApp.Infrastructure.Persistence.DbContexts
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<Todo> Todos { get; set; }
-        public DbSet<Goal> Goals { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
