@@ -23,7 +23,15 @@ builder.Services.AddControllers();
 
 // Add Swagger services
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "TodoApp API",
+        Version = "v1",
+        Description = "API documentation for the TodoApp."
+    });
+});
 
 var app = builder.Build();
 
