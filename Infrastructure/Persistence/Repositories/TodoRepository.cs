@@ -36,7 +36,7 @@ namespace TodoApp.Infrastructure.Repositories
             var todoEntity = await _context.Todos.FindAsync(id);
             if (todoEntity == null)
             {
-                return null; // Or throw a custom exception
+                throw new KeyNotFoundException("Todo not found."); // Or throw a custom exception
             }
 
             return _mapper.Map<TodoDto>(todoEntity);
@@ -53,7 +53,7 @@ namespace TodoApp.Infrastructure.Repositories
             var todoEntity = await _context.Todos.FindAsync(id);
             if (todoEntity == null)
             {
-                return null; // Or throw a custom exception
+                throw new KeyNotFoundException("Todo not found."); // Or throw a custom exception
             }
 
             // Map updated fields from DTO to entity
