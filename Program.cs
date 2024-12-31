@@ -11,8 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 //     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Configure the DbContext to use MySQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql("Server=localhost;Database=todoappdb;User=root;Password=1234;", 
-        ServerVersion.AutoDetect("Server=localhost;Database=todoappdb;User=root;Password=1234;")));
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("MySqlConnectionString"), 
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("MySqlConnectionString"))
+    )
+);
 // Register application services
 builder.Services.AddScoped<ITodoService, TodoRepository>();
 
