@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Configure the DbContext to use MySQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(
-        builder.Configuration.GetConnectionString("MySqlConnectionString"), 
+        builder.Configuration.GetConnectionString("MySqlConnectionString"),
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("MySqlConnectionString"))
     )
 );
@@ -25,6 +25,8 @@ builder.Services.AddAuthorization();
 // Add AutoMapper
 builder.Services.AddAutoMapper(typeof(TodoMappingProfile)); // Register a single profile
 // builder.Services.AddAutoMapper(typeof(TodoMappingProfile), typeof(GoalMappingProfile));
+builder.Services.AddProblemDetails();
+
 
 // Add controllers with structured JSON response
 builder.Services.AddControllers();
