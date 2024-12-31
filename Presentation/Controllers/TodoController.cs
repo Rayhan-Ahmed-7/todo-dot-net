@@ -5,7 +5,7 @@ using TodoApp.Application.Todo.DTOs;
 namespace TodoApp.Presentation.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/todos")]
     public class TodoController : ControllerBase
     {
         private readonly ITodoService _todoService;
@@ -15,14 +15,14 @@ namespace TodoApp.Presentation.Controllers
             _todoService = todoService;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<ActionResult<TodoDto>> Create(CreateTodoDto createTodoDto)
         {
             var todo = await _todoService.CreateTodoAsync(createTodoDto);
             return CreatedAtAction(nameof(GetById), new { id = todo.Id }, todo);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("details/{id}")]
         public async Task<ActionResult<TodoDto>> GetById(int id)
         {
             var todo = await _todoService.GetTodoByIdAsync(id);
@@ -30,21 +30,21 @@ namespace TodoApp.Presentation.Controllers
             return todo;
         }
 
-        [HttpGet]
+        [HttpGet("")]
         public async Task<ActionResult<List<TodoDto>>> GetAll()
         {
             var todos = await _todoService.GetAllTodosAsync();
             return Ok(todos);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         public async Task<ActionResult<TodoDto>> Update(int id, UpdateTodoDto updateTodoDto)
         {
             var updatedTodo = await _todoService.UpdateTodoAsync(id, updateTodoDto);
             return Ok(updatedTodo);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _todoService.DeleteTodoAsync(id);

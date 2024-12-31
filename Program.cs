@@ -2,13 +2,17 @@ using Microsoft.EntityFrameworkCore;
 using TodoApp.Infrastructure.Persistence.DbContexts;
 using TodoApp.Application.Todo.Interfaces;
 using TodoApp.Infrastructure.Repositories;
+using TodoApp.Application.Todo.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
+// builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Configure the DbContext to use MySQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+    options.UseMySql("Server=localhost;Database=todoappdb;User=root;Password=1234;", 
+        ServerVersion.AutoDetect("Server=localhost;Database=todoappdb;User=root;Password=1234;")));
 // Register application services
 builder.Services.AddScoped<ITodoService, TodoRepository>();
 
@@ -16,7 +20,8 @@ builder.Services.AddScoped<ITodoService, TodoRepository>();
 builder.Services.AddAuthorization();
 
 // Add AutoMapper
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(TodoMappingProfile)); // Register a single profile
+// builder.Services.AddAutoMapper(typeof(TodoMappingProfile), typeof(GoalMappingProfile));
 
 // Add controllers with structured JSON response
 builder.Services.AddControllers();
