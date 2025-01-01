@@ -1,5 +1,9 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using TodoApp.Application.Models;
 
 namespace TodoApp.Infrastructure.Middleware
@@ -31,28 +35,34 @@ namespace TodoApp.Infrastructure.Middleware
             if (contentType != null && contentType.Contains("application/json"))
             {
                 var statusCode = context.Response.StatusCode;
-
                 object responseBody;
 
                 if (statusCode >= 400)
                 {
+                    // Handle error responses
+                    var errors = JsonSerializer.Deserialize<Dictionary<string, object>>(body);
                     responseBody = new ApiResponse<object>(
-                        message: "An error occurred",
+                        message: GetErrorMessage(errors),
                         status: statusCode,
                         data: null,
-                        errors: JsonSerializer.Deserialize<object>(body)
+                        errors: errors
                     );
                 }
                 else
                 {
+                    // Normal response
+                    var responseData = JsonSerializer.Deserialize<object>(body);
+
+                    // Return response without wrapping in another ApiResponse
                     responseBody = new ApiResponse<object>(
                         message: "Success",
                         status: statusCode,
-                        data: JsonSerializer.Deserialize<object>(body),
+                        data: responseData, // Directly assigning the response data
                         errors: null
                     );
                 }
 
+                // Set the response back to the original stream and write the custom response
                 context.Response.ContentType = "application/json";
                 context.Response.Body = originalBodyStream;
 
@@ -64,6 +74,23 @@ namespace TodoApp.Infrastructure.Middleware
                 memoryStream.Seek(0, SeekOrigin.Begin);
                 await memoryStream.CopyToAsync(originalBodyStream);
             }
+        }
+
+        private string GetErrorMessage(Dictionary<string, object> errors)
+        {
+            // Customize how you want to extract the error message
+            var firstError = errors.FirstOrDefault();
+            if (firstError.Key != null && firstError.Value is IEnumerable<string> messages)
+            {
+                foreach (var message in messages)
+                {
+                    if (message.Contains("is required", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return $"{firstError.Key} | {message}";
+                    }
+                }
+            }
+            return "An error occurred";
         }
     }
 }

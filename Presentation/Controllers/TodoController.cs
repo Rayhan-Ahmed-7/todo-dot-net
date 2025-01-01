@@ -17,23 +17,17 @@ namespace TodoApp.Presentation.Controllers
         }
 
         [HttpPost("create")]
-public async Task<ActionResult<TodoDto>> Create(CreateTodoDto createTodoDto)
-{
-    if (!ModelState.IsValid)
-    {
-        var errors = ModelState.ToDictionary(
-            kvp => kvp.Key,
-            kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
-        );
-        
-        var errorResponse = new ApiResponse<object>( "Validation failed",StatusCodes.Status400BadRequest, null, errors);
-        return BadRequest(errorResponse);
-    }
+        public async Task<ActionResult<TodoDto>> Create(CreateTodoDto createTodoDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-    var todo = await _todoService.CreateTodoAsync(createTodoDto);
-    var successResponse = new ApiResponse<TodoDto>( "Todo created successfully",StatusCodes.Status201Created, todo, null);
-    return CreatedAtAction(nameof(GetById), new { id = todo.Id }, successResponse);
-}
+            var todo = await _todoService.CreateTodoAsync(createTodoDto);
+            var successResponse = new ApiResponse<TodoDto>("Todo created successfully", StatusCodes.Status201Created, todo, null);
+            return CreatedAtAction(nameof(GetById), new { id = todo.Id }, successResponse);
+        }
 
         [HttpGet("details/{id}")]
         public async Task<ActionResult<TodoDto>> GetById(int id)

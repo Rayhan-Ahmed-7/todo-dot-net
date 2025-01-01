@@ -4,6 +4,7 @@ using TodoApp.Application.Todo.Interfaces;
 using TodoApp.Infrastructure.Repositories;
 using TodoApp.Application.Todo.Mappings;
 using TodoApp.Infrastructure.Middleware;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,10 +28,12 @@ builder.Services.AddAuthorization();
 builder.Services.AddAutoMapper(typeof(TodoMappingProfile)); // Register a single profile
 // builder.Services.AddAutoMapper(typeof(TodoMappingProfile), typeof(GoalMappingProfile));
 
-
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 // Add controllers with structured JSON response
 builder.Services.AddControllers();
-
 // Add Swagger services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -42,6 +45,7 @@ builder.Services.AddSwaggerGen(options =>
         Description = "API documentation for the TodoApp."
     });
 });
+
 
 var app = builder.Build();
 
