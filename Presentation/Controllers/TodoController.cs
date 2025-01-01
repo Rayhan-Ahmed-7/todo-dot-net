@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TodoApp.Application.Todo.Interfaces;
 using TodoApp.Application.Todo.DTOs;
+using TodoApp.Application.Models;
 
 namespace TodoApp.Presentation.Controllers
 {
@@ -16,11 +17,23 @@ namespace TodoApp.Presentation.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult<TodoDto>> Create(CreateTodoDto createTodoDto)
-        {
-            var todo = await _todoService.CreateTodoAsync(createTodoDto);
-            return CreatedAtAction(nameof(GetById), new { id = todo.Id }, todo);
-        }
+public async Task<ActionResult<TodoDto>> Create(CreateTodoDto createTodoDto)
+{
+    if (!ModelState.IsValid)
+    {
+        var errors = ModelState.ToDictionary(
+            kvp => kvp.Key,
+            kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+        );
+        
+        var errorResponse = new ApiResponse<object>( "Validation failed",StatusCodes.Status400BadRequest, null, errors);
+        return BadRequest(errorResponse);
+    }
+
+    var todo = await _todoService.CreateTodoAsync(createTodoDto);
+    var successResponse = new ApiResponse<TodoDto>( "Todo created successfully",StatusCodes.Status201Created, todo, null);
+    return CreatedAtAction(nameof(GetById), new { id = todo.Id }, successResponse);
+}
 
         [HttpGet("details/{id}")]
         public async Task<ActionResult<TodoDto>> GetById(int id)

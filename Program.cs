@@ -3,6 +3,7 @@ using TodoApp.Infrastructure.Persistence.DbContexts;
 using TodoApp.Application.Todo.Interfaces;
 using TodoApp.Infrastructure.Repositories;
 using TodoApp.Application.Todo.Mappings;
+using TodoApp.Infrastructure.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +26,6 @@ builder.Services.AddAuthorization();
 // Add AutoMapper
 builder.Services.AddAutoMapper(typeof(TodoMappingProfile)); // Register a single profile
 // builder.Services.AddAutoMapper(typeof(TodoMappingProfile), typeof(GoalMappingProfile));
-builder.Services.AddProblemDetails();
 
 
 // Add controllers with structured JSON response
@@ -51,6 +51,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMiddleware<CustomResponseMiddleware>();
 
 // Enable HTTPS redirection
 app.UseHttpsRedirection();
