@@ -6,7 +6,7 @@ namespace TodoApp.Application.Todo.Interfaces
     {
         Task<TodoDto> CreateTodoAsync(CreateTodoDto createTodoDto);
         Task<TodoDto> GetTodoByIdAsync(int id);
-        Task<List<TodoDto>> GetAllTodosAsync(TodoQueryDto queryDto);
+        Task<List<TodoDto>> GetAllTodosAsync(TodoQueryDto queryDto); // Ensure this returns TodoDto
         Task<TodoDto> UpdateTodoAsync(int id, UpdateTodoDto updateTodoDto);
         Task DeleteTodoAsync(int id);
     }

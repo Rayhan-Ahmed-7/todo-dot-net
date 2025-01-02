@@ -1,13 +1,13 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Application.Todo.DTOs;
-using TodoApp.Application.Todo.Interfaces;
-using TodoApp.Domain.Todo.Entities;
 using TodoApp.Infrastructure.Persistence.DbContexts;
+using TodoApp.Infrastructure.Interfaces;
+using TodoApp.Domain.Todo.Entities;
 
 namespace TodoApp.Infrastructure.Repositories
 {
-    public class TodoRepository : ITodoService
+    public class TodoRepository : ITodoRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -20,14 +20,14 @@ namespace TodoApp.Infrastructure.Repositories
 
         public async Task<TodoDto> CreateTodoAsync(CreateTodoDto createTodoDto)
         {
-            // Map DTO to entity
+            // Map DTO to Todo entity (not to TodoDto)
             var todoEntity = _mapper.Map<Todo>(createTodoDto);
 
             // Save to the database
             await _context.Todos.AddAsync(todoEntity);
             await _context.SaveChangesAsync();
 
-            // Map entity to DTO and return
+            // Map the saved entity to TodoDto and return it
             return _mapper.Map<TodoDto>(todoEntity);
         }
 
@@ -36,13 +36,13 @@ namespace TodoApp.Infrastructure.Repositories
             var todoEntity = await _context.Todos.FindAsync(id);
             if (todoEntity == null)
             {
-                throw new KeyNotFoundException("Todo not found."); // Or throw a custom exception
+                throw new KeyNotFoundException("Todo not found.");
             }
 
             return _mapper.Map<TodoDto>(todoEntity);
         }
 
-        public async Task<List<Todo>> GetTodosAsync(TodoQueryDto queryDto)
+        public async Task<List<TodoDto>> GetTodosAsync(TodoQueryDto queryDto)
         {
             IQueryable<Todo> query = _context.Todos;
 
@@ -64,7 +64,10 @@ namespace TodoApp.Infrastructure.Repositories
                 query = query.Where(todo => todo.IsCompleted == queryDto.IsCompleted.Value);
             }
 
-            return await query.ToListAsync();
+            var todoEntities = await query.ToListAsync();
+
+            // Map Todo entities to TodoDto before returning
+            return _mapper.Map<List<TodoDto>>(todoEntities);
         }
 
         public async Task<TodoDto> UpdateTodoAsync(int id, UpdateTodoDto updateTodoDto)
@@ -72,7 +75,7 @@ namespace TodoApp.Infrastructure.Repositories
             var todoEntity = await _context.Todos.FindAsync(id);
             if (todoEntity == null)
             {
-                throw new KeyNotFoundException("Todo not found."); // Or throw a custom exception
+                throw new KeyNotFoundException("Todo not found.");
             }
 
             // Map updated fields from DTO to entity
