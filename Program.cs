@@ -5,6 +5,8 @@ using TodoApp.Infrastructure.Middleware;
 using Microsoft.AspNetCore.Mvc;
 using TodoApp.Infrastructure.Interfaces;
 using TodoApp.Infrastructure.Repositories;
+using TodoApp.Application.Todo.Interfaces;
+using TodoApp.Application.Todo.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     )
 );
 // Register application services
+builder.Services.AddScoped<ITodoService, TodoService>();
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 
 // Add Authorization
