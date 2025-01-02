@@ -42,10 +42,29 @@ namespace TodoApp.Infrastructure.Repositories
             return _mapper.Map<TodoDto>(todoEntity);
         }
 
-        public async Task<List<TodoDto>> GetAllTodosAsync()
+        public async Task<List<Todo>> GetTodosAsync(TodoQueryDto queryDto)
         {
-            var todoEntities = await _context.Todos.ToListAsync();
-            return _mapper.Map<List<TodoDto>>(todoEntities);
+            IQueryable<Todo> query = _context.Todos;
+
+            // Apply Title filter if provided
+            if (!string.IsNullOrEmpty(queryDto.Title))
+            {
+                query = query.Where(todo => todo.Title.Contains(queryDto.Title));
+            }
+
+            // Apply Description filter if provided
+            if (!string.IsNullOrEmpty(queryDto.Description))
+            {
+                query = query.Where(todo => todo.Description.Contains(queryDto.Description));
+            }
+
+            // Apply IsCompleted filter if provided
+            if (queryDto.IsCompleted.HasValue)
+            {
+                query = query.Where(todo => todo.IsCompleted == queryDto.IsCompleted.Value);
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task<TodoDto> UpdateTodoAsync(int id, UpdateTodoDto updateTodoDto)

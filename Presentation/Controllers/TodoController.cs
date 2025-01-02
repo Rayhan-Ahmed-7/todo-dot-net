@@ -38,9 +38,9 @@ namespace TodoApp.Presentation.Controllers
         }
 
         [HttpGet("")]
-        public async Task<ActionResult<List<TodoDto>>> GetAll()
+        public async Task<ActionResult<List<TodoDto>>> GetAll([FromQuery] TodoQueryDto queryDto)
         {
-            var todos = await _todoService.GetAllTodosAsync();
+            var todos = await _todoService.GetAllTodosAsync(queryDto);
             return Ok(todos);
         }
 
