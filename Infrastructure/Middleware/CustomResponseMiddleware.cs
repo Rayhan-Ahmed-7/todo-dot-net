@@ -1,9 +1,4 @@
 using System.Text.Json;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using TodoApp.Application.Models;
 
 namespace TodoApp.Infrastructure.Middleware
@@ -35,12 +30,35 @@ namespace TodoApp.Infrastructure.Middleware
             if (contentType != null && contentType.Contains("application/json"))
             {
                 var statusCode = context.Response.StatusCode;
+
+                // Avoid double-wrapping
+                if (body.StartsWith("{") && body.Contains("\"message\"") && body.Contains("\"status\"") && body.Contains("\"data\""))
+                {
+                    context.Response.Body = originalBodyStream;
+                    await context.Response.WriteAsync(body);
+                    return;
+                }
+
                 object responseBody;
 
                 if (statusCode >= 400)
                 {
                     // Handle error responses
-                    var errors = JsonSerializer.Deserialize<Dictionary<string, object>>(body);
+                    Dictionary<string, object> errors = null;
+                    try
+                    {
+                        errors = JsonSerializer.Deserialize<Dictionary<string, object>>(body);
+                        errors = errors?.ToDictionary(
+                        key => key.Key.ToLowerInvariant(), // Convert keys to lowercase
+                        value => value.Value
+                        );
+                    }
+                    catch
+                    {
+                        // If deserialization fails, set a generic error
+                        errors = new Dictionary<string, object> { { "Error", body } };
+                    }
+
                     responseBody = new ApiResponse<object>(
                         message: GetErrorMessage(errors),
                         status: statusCode,
@@ -50,19 +68,16 @@ namespace TodoApp.Infrastructure.Middleware
                 }
                 else
                 {
-                    // Normal response
+                    // Handle success responses
                     var responseData = JsonSerializer.Deserialize<object>(body);
-
-                    // Return response without wrapping in another ApiResponse
                     responseBody = new ApiResponse<object>(
                         message: "Success",
                         status: statusCode,
-                        data: responseData, // Directly assigning the response data
+                        data: responseData,
                         errors: null
                     );
                 }
 
-                // Set the response back to the original stream and write the custom response
                 context.Response.ContentType = "application/json";
                 context.Response.Body = originalBodyStream;
 
@@ -78,19 +93,17 @@ namespace TodoApp.Infrastructure.Middleware
 
         private string GetErrorMessage(Dictionary<string, object> errors)
         {
-            // Customize how you want to extract the error message
+            if (errors == null || !errors.Any()) return "An error occurred";
+
             var firstError = errors.FirstOrDefault();
-            if (firstError.Key != null && firstError.Value is IEnumerable<string> messages)
+            if (firstError.Key != null && firstError.Value is JsonElement jsonElement && jsonElement.ValueKind == JsonValueKind.Array)
             {
-                foreach (var message in messages)
-                {
-                    if (message.Contains("is required", StringComparison.OrdinalIgnoreCase))
-                    {
-                        return $"{firstError.Key} | {message}";
-                    }
-                }
+                var messages = JsonSerializer.Deserialize<List<string>>(jsonElement.GetRawText());
+                return messages?.FirstOrDefault() ?? "An error occurred";
             }
-            return "An error occurred";
+
+            return firstError.Key != null ? $"{firstError.Key} is invalid" : "An error occurred";
         }
+
     }
 }
