@@ -47,6 +47,10 @@ namespace TodoApp.Presentation.Controllers
         [HttpPut("update/{id}")]
         public async Task<ActionResult<TodoDto>> Update(int id, UpdateTodoDto updateTodoDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var updatedTodo = await _todoService.UpdateTodoAsync(id, updateTodoDto);
             return Ok(updatedTodo);
         }
