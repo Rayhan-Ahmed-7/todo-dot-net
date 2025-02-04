@@ -7,6 +7,10 @@ using TodoApp.Infrastructure.Interfaces;
 using TodoApp.Infrastructure.Repositories;
 using TodoApp.Application.Todo.Interfaces;
 using TodoApp.Application.Todo.Services;
+using TodoApp.Application.Employees.Interfaces;
+using TodoApp.Application.Employees.Services;
+using DinkToPdf.Contracts;
+using DinkToPdf;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,10 +24,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("MySqlConnectionString"))
     )
 );
+// Register DinkToPdf services
+builder.Services.AddSingleton<IConverter, SynchronizedConverter>(provider =>
+    new SynchronizedConverter(new PdfTools()));
 // Register application services
 builder.Services.AddScoped<ITodoService, TodoService>();
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
-
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IGenerateEmployeeIdCardService, GenerateEmployeeIdCardService>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 // Add Authorization
 builder.Services.AddAuthorization();
 

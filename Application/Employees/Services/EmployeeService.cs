@@ -1,6 +1,8 @@
 using TodoApp.Application.Employees.Interfaces;
+using TodoApp.Domain.Employees.Entities;
+using TodoApp.Infrastructure.Interfaces;
 
-namespace TodoApp.Application.Todo.Services
+namespace TodoApp.Application.Employees.Services
 {
     public class EmployeeService : IEmployeeService
     {

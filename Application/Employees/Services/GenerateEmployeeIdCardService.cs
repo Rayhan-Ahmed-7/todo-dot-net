@@ -1,11 +1,7 @@
-using Application.Interfaces;
-using Domain.Entities;
+using TodoApp.Application.Employees.Interfaces;
+using TodoApp.Infrastructure.Interfaces;
 using DinkToPdf;
 using DinkToPdf.Contracts;
-using System;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 
 public class GenerateEmployeeIdCardService : IGenerateEmployeeIdCardService
 {

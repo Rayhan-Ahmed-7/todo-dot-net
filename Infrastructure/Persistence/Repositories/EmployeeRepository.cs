@@ -1,16 +1,13 @@
-using Application.Interfaces;
-using Domain.Entities;
-using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using TodoApp.Domain.Employees.Entities;
+using TodoApp.Infrastructure.Interfaces;
+using TodoApp.Infrastructure.Persistence.DbContexts;
 
 public class EmployeeRepository : IEmployeeRepository
 {
-    private readonly AppDbContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public EmployeeRepository(AppDbContext context)
+    public EmployeeRepository(ApplicationDbContext context)
     {
         _context = context;
     }

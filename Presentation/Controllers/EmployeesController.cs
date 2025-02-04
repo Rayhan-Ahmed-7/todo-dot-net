@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using TodoApp.Application.Employee.Interfaces;
+using TodoApp.Application.Employees.Interfaces;
 using TodoApp.Domain.Employees.Entities;
 
-[Route("api/employees")]
 [ApiController]
+[Route("api/employees")]
 public class EmployeesController : ControllerBase
 {
     private readonly IEmployeeService _employeeService;
@@ -16,9 +16,24 @@ public class EmployeesController : ControllerBase
     }
 
     // ✅ Create Employee
-    [HttpPost]
-    public async Task<IActionResult> CreateEmployee([FromBody] Employee employee)
+    [HttpPost("create")]
+    public async Task<IActionResult> CreateEmployee([FromBody] Employee employeeDto)
     {
+        Console.WriteLine("Received null employee data.", employeeDto);
+
+        if (employeeDto == null)
+        {
+            return BadRequest("Employee data is required.");
+        }
+        var employee = new Employee
+        {
+            Id = employeeDto.Id,
+            FullName = employeeDto.FullName,
+            JobTitle = employeeDto.JobTitle,
+            Department = employeeDto.Department,
+            EmployeeNumber = employeeDto.EmployeeNumber,
+            // Photo = string.IsNullOrEmpty(employeeDto.Photo) ? null : Convert.FromBase64String(employeeDto.Photo)
+        };
         var createdEmployee = await _employeeService.CreateAsync(employee);
         return CreatedAtAction(nameof(GetEmployeeById), new { id = createdEmployee.Id }, createdEmployee);
     }
@@ -32,7 +47,7 @@ public class EmployeesController : ControllerBase
     }
 
     // ✅ Get Employee by ID
-    [HttpGet("{id}")]
+    [HttpGet("details/{id}")]
     public async Task<ActionResult<Employee>> GetEmployeeById(Guid id)
     {
         var employee = await _employeeService.GetByIdAsync(id);
@@ -41,7 +56,7 @@ public class EmployeesController : ControllerBase
     }
 
     // ✅ Update Employee
-    [HttpPut("{id}")]
+    [HttpPut("update/{id}")]
     public async Task<IActionResult> UpdateEmployee(Guid id, [FromBody] Employee updatedEmployee)
     {
         var employee = await _employeeService.UpdateAsync(id, updatedEmployee);
@@ -50,7 +65,7 @@ public class EmployeesController : ControllerBase
     }
 
     // ✅ Delete Employee
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public async Task<IActionResult> DeleteEmployee(Guid id)
     {
         var result = await _employeeService.DeleteAsync(id);

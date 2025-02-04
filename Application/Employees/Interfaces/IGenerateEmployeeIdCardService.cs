@@ -1,4 +1,4 @@
-namespace TodoApp.Application.Employee.Interfaces
+namespace TodoApp.Application.Employees.Interfaces
 {
     public interface IGenerateEmployeeIdCardService
     {
