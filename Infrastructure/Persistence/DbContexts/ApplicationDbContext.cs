@@ -9,6 +9,7 @@ namespace TodoApp.Infrastructure.Persistence.DbContexts
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<Todo> Todos { get; set; }
+        public DbSet<Todo> Employees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

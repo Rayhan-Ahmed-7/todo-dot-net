@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Application.Interfaces;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using TodoApp.Application.Employee.Interfaces;
+using TodoApp.Domain.Employees.Entities;
 
 [Route("api/employees")]
 [ApiController]
@@ -67,7 +64,7 @@ public class EmployeesController : ControllerBase
     {
         var pdfData = await _idCardService.GeneratePdfAsync(id);
         if (pdfData == null) return NotFound("Employee not found or unable to generate ID card.");
-        
+
         return File(pdfData, "application/pdf", "EmployeeIdCard.pdf");
     }
 }

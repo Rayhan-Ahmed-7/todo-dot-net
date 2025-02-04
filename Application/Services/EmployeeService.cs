@@ -1,50 +1,48 @@
-using Application.Interfaces;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using TodoApp.Application.Employees.Interfaces;
 
-public class EmployeeService : IEmployeeService
+namespace TodoApp.Application.Todo.Services
 {
-    private readonly IEmployeeRepository _employeeRepository;
-
-    public EmployeeService(IEmployeeRepository employeeRepository)
+    public class EmployeeService : IEmployeeService
     {
-        _employeeRepository = employeeRepository;
-    }
+        private readonly IEmployeeRepository _employeeRepository;
 
-    public async Task<Employee> CreateAsync(Employee employee)
-    {
-        return await _employeeRepository.AddAsync(employee);
-    }
+        public EmployeeService(IEmployeeRepository employeeRepository)
+        {
+            _employeeRepository = employeeRepository;
+        }
 
-    public async Task<IEnumerable<Employee>> GetAllAsync()
-    {
-        return await _employeeRepository.GetAllAsync();
-    }
+        public async Task<Employee> CreateAsync(Employee employee)
+        {
+            return await _employeeRepository.AddAsync(employee);
+        }
 
-    public async Task<Employee?> GetByIdAsync(Guid id)
-    {
-        return await _employeeRepository.GetByIdAsync(id);
-    }
+        public async Task<IEnumerable<Employee>> GetAllAsync()
+        {
+            return await _employeeRepository.GetAllAsync();
+        }
 
-    public async Task<Employee?> UpdateAsync(Guid id, Employee updatedEmployee)
-    {
-        var employee = await _employeeRepository.GetByIdAsync(id);
-        if (employee == null) return null;
+        public async Task<Employee?> GetByIdAsync(Guid id)
+        {
+            return await _employeeRepository.GetByIdAsync(id);
+        }
 
-        employee.FullName = updatedEmployee.FullName;
-        employee.JobTitle = updatedEmployee.JobTitle;
-        employee.Department = updatedEmployee.Department;
-        employee.EmployeeNumber = updatedEmployee.EmployeeNumber;
-        employee.Photo = updatedEmployee.Photo;
+        public async Task<Employee?> UpdateAsync(Guid id, Employee updatedEmployee)
+        {
+            var employee = await _employeeRepository.GetByIdAsync(id);
+            if (employee == null) return null;
 
-        return await _employeeRepository.UpdateAsync(employee);
-    }
+            employee.FullName = updatedEmployee.FullName;
+            employee.JobTitle = updatedEmployee.JobTitle;
+            employee.Department = updatedEmployee.Department;
+            employee.EmployeeNumber = updatedEmployee.EmployeeNumber;
+            employee.Photo = updatedEmployee.Photo;
 
-    public async Task<bool> DeleteAsync(Guid id)
-    {
-        return await _employeeRepository.DeleteAsync(id);
+            return await _employeeRepository.UpdateAsync(employee);
+        }
+
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            return await _employeeRepository.DeleteAsync(id);
+        }
     }
 }
