@@ -1,0 +1,176 @@
+@font-face {
+  font-family: "SutonnyMJ";
+  src: url("/assets/fonts/SutonnyMJ/SutonnyOMJ.ttf") format("truetype"),
+    url("/assets/fonts/SutonnyMJ/SutonnyMJ-Bold.ttf") format("truetype"),
+    url("/assets/fonts/SutonnyMJ/SutonnyMJ-Italic.ttf") format("truetype"),
+    url("/assets/fonts/SutonnyMJ/SutonnyMJ-BoldItalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.text-sutonny {
+  font-family: "SutonnyMJ", Arial, sans-serif;
+}
+* {
+  box-sizing: border-box;
+}
+
+/* General Styles */
+.body-background {
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Instruction Card (Design 3) */
+.card-back{
+  width: 300px;
+  background: #fff;
+  padding: 10px;
+}
+.instruction-card {
+  width: 100%;
+  background: #fff;
+  padding: 5px;
+  border: 5px solid #fcd5b5;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.instruction-title {
+  font-size: 25px;
+  margin: 0px;
+}
+.border{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.border .border1,
+.border .border2{
+  height: 2px;
+  width:33%;
+  background-color: #000;
+}
+.border2{
+  margin-top: 2px;
+}
+
+.instruction-text {
+  font-size: 20px;
+  margin: 20px 0;
+  font-weight: 600;
+}
+
+/* Labels */
+.label {
+  display: inline-block;
+  padding-right: 3px;
+}
+
+/* ID Card (Design 4) */
+.id-card {
+  width: 300px;
+  border: 2px solid #004aad;
+  font-family: "SutonnyMJ", Arial, sans-serif;
+  line-height: 1;
+  background-color: #fff;
+}
+
+/* Header */
+.id-card-header {
+  background-color: #004aad;
+  color: #fff;
+  padding-bottom: 3px;
+  text-align: center;
+}
+
+.id-card-title {
+  margin: 0;
+  font-size: 20px;
+  font-style: italic;
+}
+
+/* Card Info */
+.id-card-info {
+  padding: 5px 15px 0px 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.id-card-logo {
+  width: 70px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.id-card-number {
+  text-align: left;
+  font-size: 18px;
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* Photo */
+.id-card-photo {
+  text-align: center;
+  padding: 0px 10px 0px 10px;
+}
+
+.id-card-photo img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+/* Personal Information */
+.id-card-details {
+  margin-bottom: 10px;
+  padding: 13px;
+}
+
+.id-card-details p {
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+/* Signature Section */
+.signature-section {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+
+.signature-box {
+  width: 40%;
+  text-align: center;
+  border-top: 1px solid #000;
+}
+
+.signature-box p {
+  margin: 2px 0;
+  font-size: 16px;
+}
+
+/* Footer */
+.id-card-footer {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 15px;
+  background-color: #004aad;
+  color: #fff;
+  padding: 2px 0;
+  font-style: italic;
+}
+.id-card-footer p {
+  margin:3px;
+}
