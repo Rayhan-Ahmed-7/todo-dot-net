@@ -9,8 +9,7 @@ using TodoApp.Application.Todo.Interfaces;
 using TodoApp.Application.Todo.Services;
 using TodoApp.Application.Employees.Interfaces;
 using TodoApp.Application.Employees.Services;
-using DinkToPdf.Contracts;
-using DinkToPdf;
+using TodoApp.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,8 +24,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     )
 );
 // Register DinkToPdf services
-builder.Services.AddSingleton<IConverter, SynchronizedConverter>(provider =>
-    new SynchronizedConverter(new PdfTools()));
+builder.Services.AddPdfService();
 // Register application services
 builder.Services.AddScoped<ITodoService, TodoService>();
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
