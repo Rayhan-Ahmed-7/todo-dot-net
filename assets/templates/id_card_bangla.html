@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ID Card</title>
+    <link rel="stylesheet" href="{{CSS_PATH}}" />
+    <style>
+      @font-face {
+          font-family: "SutonnyMJ";
+          src: url("{{FONT_PATH}}") format("truetype");
+          font-weight: normal;
+          font-style: normal;
+      }
+      .text-sutonny {
+          font-family: "SutonnyMJ", Arial, sans-serif;
+      }
+  </style>
+  </head>
+  <body class="body-background">
+    <!-- Design 1 -->
+    <div class="id-card">
+      <!-- Header -->
+      <div class="id-card-header">
+        <h2 class="id-card-title text-sutonny">আইডি কার্ড</h2>
+      </div>
+
+      <div class="id-card-info">
+        <!-- Left Logo -->
+        <img
+          src="{{LOGO}}"
+          alt="Company Logo"
+          class="id-card-logo"
+        />
+        <!-- Card Number -->
+        <div class="id-card-number">
+          <p><span class="label">কার্ড নংঃ</span> ৩০৭০১৪৪</p>
+        </div>
+      </div>
+
+      <!-- Photo -->
+      <div class="id-card-photo">
+        <img
+          src="{{PHOTO}}"
+          alt="Profile Picture"
+        />
+      </div>
+
+      <!-- Personal Information -->
+      <div class="id-card-details">
+        <p><span class="label">নামঃ</span> {{EMPLOYEE_NAME}}</p>
+        <p><span class="label">পদবীঃ</span> {{JOB_TITLE}}</p>
+        <p><span class="label">যোগদানের তারিখঃ</span> ০১-০২-২০২২</p>
+        <p><span class="label">ইস্যুর তারিখঃ</span> ০১-০২-২০২২</p>
+        <p><span class="label">মেয়াদঃ</span> ২০২২-২০২৪</p>
+        <p><span class="label">রক্তের গ্রুপঃ</span> O+</p>
+        <p><span class="label">পরিচয় পত্র নংঃ</span> ১৮৪৫৫৪৩০৩৮</p>
+      </div>
+
+      <!-- Signature Section -->
+      <div class="signature-section">
+        <div class="signature-box">
+          <p>শ্রমিকের স্বাক্ষর</p>
+        </div>
+        <div class="signature-box">
+          <p>মহাব্যবস্থাপক স্বাক্ষর</p>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="id-card-footer">
+        <p>ব্যাংজিন (বাংলাদেশ) লিমিটেড</p>
+      </div>
+    </div>
+    <!-- Design 2 -->
+    <div class="card-back">
+      <div class="instruction-card text-sutonny">
+        <h2 class="instruction-title">নির্দেশাবলীঃ</h2>
+        <div class="border">
+          <div class="border1"></div>
+          <div class="border2"></div>
+        </div>
+        <p class="instruction-text">
+          ০১। কর্তব্যকালের সর্বদা পরিধেয়।<br />
+          ০২। এই কার্ড হস্তান্তর যোগ্য নয়।<br />
+          ০৩। চাকরি ত্যাগ কালে এই কার্ড <br />
+          প্রশাসন বিভাগে জমা দিতে হবে।<br />
+        </p>
+        <p class="instruction-text">
+          <span class="label">কারখানা/প্রতিষ্ঠানের ঠিকানাঃ</span><br />
+          জয় বাংলা সড়ক, কুনিয়া, কে বি<br />
+          বাজার, বড়বাড়ি, গাজীপুর, বাংলাদেশ।
+        </p>
+        <p class="instruction-text">
+          কার্ডটি হারিয়ে গেলে তাৎক্ষণিক <br />
+          যোগাযোগ করুন।<br />
+          <span class="label">ফোনঃ</span> ০১৭০৯-৮১৪৩৯৮
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
