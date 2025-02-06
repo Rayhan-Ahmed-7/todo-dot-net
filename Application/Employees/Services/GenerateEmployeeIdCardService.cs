@@ -37,6 +37,7 @@ public class GenerateEmployeeIdCardService : IGenerateEmployeeIdCardService
         foreach (var employee in employees)
         {
             string employeePhotoPath = Path.Combine(_assetsPath, "images/employee/employee_profile.jpeg");
+            string phoneIcon = Path.Combine(_assetsPath, "images/employee/employee_profile.jpeg");
             string photoBase64 = employee.Photo != null && employee.Photo.Length > 0
                 ? Convert.ToBase64String(employee.Photo)
                 : Convert.ToBase64String(await File.ReadAllBytesAsync(employeePhotoPath));

@@ -8,7 +8,6 @@
 .body-background {
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -23,6 +22,8 @@
   background: #fff;
   border:2px solid #000;
   border-radius: 2px;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .second-card {
@@ -35,23 +36,27 @@
   overflow: hidden;
   padding: 0 10px;
   display: flex;
+  display: -webkit-box;
+  display: -moz-box;
   align-items: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
 }
 
 .logo {
   width: 70px;
   height: 50px;
-  float: left;
+  /* float: left; */
   margin-right: 10px;
-  vertical-align: middle;
+  /* vertical-align: middle; */
   padding: 8px 2px 0px 2px;
 }
 
-.header-text {
+/* .header-text {
   display: inline-block;
   vertical-align: middle;
   text-align: left;
-}
+} */
 
 .company-name {
   font-size: 32px;
@@ -78,7 +83,7 @@
 }
 
 .details {
-  line-height: 1.2;
+  line-height: 1.3;
   padding: 0 10px;
 }
 
@@ -88,7 +93,7 @@
 }
 .details p .details-left{
   display: inline-block;
-  width: 110px;
+  width: 100px;
 }
 .blood-group {
   color: red;
@@ -97,7 +102,7 @@
 .signature-box{
   text-align: end;
   font-weight: bold;
-  margin:14px 10px 0px 0px;
+  margin:18px 10px 0px 0px;
   font-size: 13px;
 }
 
@@ -142,9 +147,14 @@
 
 .hotline {
   margin: 5px 20px;
-  padding: 10px 8px;
+  padding: 8px 8px;
   background-color: #1a68b4;
   display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  align-items: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
   gap:10px;
   width: 250px;
   border-radius: 4px;
@@ -153,6 +163,7 @@
 .hotline img{
   width: 20px;
   height: 20px;
+  margin-right: 5px;
 }
 
 .hotline p{

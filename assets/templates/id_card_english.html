@@ -4,14 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ID Card</title>
-    <link rel="stylesheet" href="/assets/css/english_id_card_style.css" />
+    <link rel="stylesheet" href="{{CSS_PATH}}" />
   </head>
   <body class="body-background">
     <!-- Designing ID Card 1 -->
     <div class="id-card">
       <!-- Header -->
       <div class="header">
-        <img src="/assets/logo/logo.png" alt="Company Logo" class="logo" />
+        <img src="{{LOGO}}" alt="Company Logo" class="logo" />
         <div class="header-text">
           <h1 class="company-name">BANG JIN</h1>
         </div>
@@ -21,7 +21,7 @@
       <!-- Photo -->
       <div class="photo">
         <img
-          src="/assets/employee/employee_profile.jpeg"
+          src="{{PHOTO}}"
           alt="Profile Picture"
         />
       </div>
@@ -29,11 +29,11 @@
       <div class="details">
         <p>
           <strong class="details-left">Designation</strong>:
-          <strong class="details-right">Security Admin Officer</strong>
+          <strong class="details-right">{{JOB_TITLE}}</strong>
         </p>
         <p>
           <strong class="details-left">Name</strong>:
-          <strong class="details-right">Md. Kamal Hossain</strong>
+          <strong class="details-right">{{EMPLOYEE_NAME}}</strong>
         </p>
         <p>
           <strong class="details-left">Section</strong>:
@@ -68,7 +68,7 @@
     <div class="id-card second-card">
       <!-- Header -->
       <div class="header">
-        <img src="/assets/logo/logo.png" alt="Company Logo" class="logo" />
+        <img src="{{LOGO}}" alt="Company Logo" class="logo" />
         <div class="header-text">
           <h1 class="company-name">BANG JIN</h1>
         </div>
@@ -84,7 +84,7 @@
 
       <!-- Hotline -->
       <div class="hotline">
-        <img src="/assets/icons/phone.svg" alt="hotline_icon" />
+        <img src="{{PHONE_ICON}}" alt="hotline_icon" />
         <p>
           <strong>Hotline: +880 1709-814398</strong>
         </p>
