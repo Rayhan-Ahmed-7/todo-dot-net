@@ -25,16 +25,17 @@ body {
   background-color: #f4f4f4;
   height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  display: -webkit-box;
   -webkit-box: flex;
+  justify-content: center;
   -webkit-box-pack: center;
+  align-items: center;
   -webkit-box-align: center;
   gap: 10px;
 }
 
 /* Instruction Card (Design 3) */
-.card-back{
+.card-back {
   width: 300px;
   background: #fff;
   padding: 10px;
@@ -51,25 +52,26 @@ body {
 .instruction-title {
   font-size: 25px;
   margin: 0px;
-  color:#000;
+  color: #000;
 }
-.border{
+.border {
   width: 100%;
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: flex;
+  display: -webkit-box;
   -webkit-box: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-align: center; */
+  flex-direction: column;
+  -webkit-box-orient: vertical;
+  align-items: center;
+  -webkit-box-align: center;
   margin-bottom: 20px;
 }
 .border .border1,
-.border .border2{
+.border .border2 {
   height: 2px;
-  width:33%;
+  width: 33%;
   background-color: #000;
 }
-.border2{
+.border2 {
   margin-top: 2px;
 }
 
@@ -111,8 +113,9 @@ body {
 /* Card Info */
 .id-card-info {
   padding: 5px 15px 0px 15px;
-  -webkit-box: flex;
   display: flex;
+  display: -webkit-box;
+  display: -moz-box;
   -webkit-box-align: center;
   align-items: center;
   gap: 15px;
@@ -158,7 +161,10 @@ body {
 .signature-section {
   margin-top: 20px;
   display: flex;
+  display: -webkit-box;
   justify-content: space-between;
+  -webkit-box-pack: justify; /* Safari, Chrome (Old) */
+  -moz-box-pack: justify; /* Firefox (Old) */
   padding: 5px 10px;
 }
 
@@ -184,5 +190,5 @@ body {
   font-style: italic;
 }
 .id-card-footer p {
-  margin:3px;
+  margin: 3px;
 }
