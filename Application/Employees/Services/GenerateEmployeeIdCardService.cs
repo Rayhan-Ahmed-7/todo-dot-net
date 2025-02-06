@@ -16,7 +16,8 @@ public class GenerateEmployeeIdCardService : IGenerateEmployeeIdCardService
     {
         _employeeRepository = employeeRepository;
         _pdfConverter = pdfConverter;
-        _assetsPath = "/home/rayhan/projects/todo-dot-net/assets/"; // Adjust to your actual path
+        _assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets");
+        // _assetsPath = "/home/rayhan/projects/todo-dot-net/assets/"; // Adjust to your actual path
         _templatePath = Path.Combine(_assetsPath, "templates/id_card_bangla.html");
         _cssPath = Path.Combine(_assetsPath, "css/bangla_id_card_style.css");
         _fontPath = Path.Combine(_assetsPath, "fonts/SutonnyMJ/SutonnyOMJ.ttf");
