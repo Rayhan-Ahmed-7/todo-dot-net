@@ -6,11 +6,11 @@ obj/
 secrets.json
 
 # Visual Studio
-.vscode/
+# .vscode/
 *.sln.ide
 
 # Visual Studio Code
-.vscode/
+# .vscode/
 *.code-workspace
 
 # Rider
