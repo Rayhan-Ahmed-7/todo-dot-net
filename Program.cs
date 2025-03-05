@@ -10,8 +10,21 @@ using TodoApp.Application.Todo.Services;
 using TodoApp.Application.Employees.Interfaces;
 using TodoApp.Application.Employees.Services;
 using TodoApp.Infrastructure.Services;
+using Application.Interfaces;
+using Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+    });
+});
 
 // Add services to the container
 // builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -30,6 +43,7 @@ builder.Services.AddScoped<ITodoService, TodoService>();
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IGenerateEmployeeIdCardService, GenerateEmployeeIdCardService>();
+builder.Services.AddScoped<IPdfGenerationService, PdfGenerationService>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 // Add Authorization
 builder.Services.AddAuthorization();
