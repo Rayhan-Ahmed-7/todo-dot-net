@@ -17,32 +17,33 @@ public class PdfController : ControllerBase
     [HttpPost("generate-pdf")]
     public async Task<IActionResult> GeneratePdf([FromBody] PdfData data)
     {
-        // Handlebars template as a string
-        var template = @"
-            <html>
-              <head>
-                <style>
-                  body { font-family: Arial, sans-serif; }
-                  h1 { color: #333; }
-                  p { font-size: 14px; }
-                </style>
-              </head>
-              <body>
-                <h1>{{title}}</h1>
-                <p>{{description}}</p>
-                <ul>
-                  {{#each items}}
-                    <li>{{this.name}}: ${{this.price}}</li>
-                  {{/each}}
-                </ul>
-              </body>
-            </html>";
+        try
+        {
+            var wwwRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "html-to-pdf-templates", "id-cards", "bangjin");
 
-        // Generate PDF using the PdfGenerationService
-        var pdfBytes = await _pdfGenerationService.GeneratePdfAsync(template, data);
+            // Construct file paths dynamically
+            var model = new
+            {
+                cssUrl = $"file://{Path.Combine(wwwRootPath, "assets/css/bangla-id-card-style.css")}",
+                logoUrl = $"file://{Path.Combine(wwwRootPath, "assets/logo/logo.png")}",
+                photoUrl = $"file://{Path.Combine(wwwRootPath, "assets/employee/employee_profile.jpeg")}"
+            };
 
-        // Return the PDF as a file response
-        return File(pdfBytes, "application/pdf", "generated.pdf");
+            Console.WriteLine(model.cssUrl);
+
+            // Handlebars template as a string
+            var templateFilePath = "id-cards/bangjin/templates/id-card-bangla.html";
+
+            // Generate PDF using the PdfGenerationService
+            var pdfBytes = await _pdfGenerationService.GeneratePdfAsync(templateFilePath, model);
+
+            // Return the PDF as a file response
+            return File(pdfBytes, "application/pdf", "generated.pdf");
+        }
+        catch (FileNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
     }
 }
 

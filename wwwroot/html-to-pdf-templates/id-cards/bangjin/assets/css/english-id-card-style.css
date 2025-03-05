@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+.text-sutonny {
+  font-family: "Libre Baskerville", serif;
+}
+
+/* General Styles */
+.body-background {
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-family: "Libre Baskerville", serif;
+}
+
+/* ID Card Styles */
+.id-card {
+  width: 300px;
+  background: #fff;
+  border:2px solid #000;
+  border-radius: 2px;
+}
+
+.second-card {
+  border:2px solid #000;
+  border-radius: 2px;
+}
+
+.header {
+  padding-bottom: 10px;
+  overflow: hidden;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 70px;
+  height: 50px;
+  float: left;
+  margin-right: 10px;
+  vertical-align: middle;
+  padding: 8px 2px 0px 2px;
+}
+
+.header-text {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+}
+
+.company-name {
+  font-size: 32px;
+  color: #1a68b4;
+  margin:0;
+}
+
+.id-number {
+  font-size: 22px;
+  margin: 4px 10px 0px 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.photo {
+  text-align: center;
+  padding: 10px;
+}
+
+.photo img {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+}
+
+.details {
+  line-height: 1.2;
+  padding: 0 10px;
+}
+
+.details p {
+  margin: 5px 0;
+  font-size: 13px;
+}
+.details p .details-left{
+  display: inline-block;
+  width: 110px;
+}
+.blood-group {
+  color: red;
+}
+
+.signature-box{
+  text-align: end;
+  font-weight: bold;
+  margin:14px 10px 0px 0px;
+  font-size: 13px;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 10px;
+  padding: 9px 0;
+  background-color: #1a68b4;
+  color: #fff;
+}
+
+.footer p {
+  font-size: 16px;
+  margin: 0;
+}
+
+.second-card .header {
+  padding: 10px;
+  overflow: hidden;
+}
+
+.second-card .company-name {
+  font-size: 32px;
+  color: #1a68b4;
+}
+
+.address {
+  padding: 0px 10px;
+  text-align: center;
+}
+
+.address h2 {
+  font-size: 16px;
+  margin: 0 0 10px;
+}
+
+.address p {
+  margin: 3px 0;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.hotline {
+  margin: 5px 20px;
+  padding: 10px 8px;
+  background-color: #1a68b4;
+  display: flex;
+  gap:10px;
+  width: 250px;
+  border-radius: 4px;
+}
+
+.hotline img{
+  width: 20px;
+  height: 20px;
+}
+
+.hotline p{
+  font-size: 14px;
+  color: #fff;
+  margin:0;
+}
+
+
+.instructions {
+  padding: 7px 10px;
+}
+
+.instructions h3 {
+  font-size: 18px;
+  margin: 0 0 10px;
+  text-align: center;
+}
+
+.instructions ul {
+  padding-left: 20px;
+  font-size: 10px;
+  line-height: 1.1;
+  margin: 0;
+}
+ul {
+  list-style-type: none; /* Remove default bullets */
+}
+ul li{
+  position: relative;
+  font-weight: 600;
+}
+ul li strong{
+  font-size: 12px;
+}
+
+ul li::before {
+  content: "\2022"; /* Unicode for bullet */
+  position:absolute;
+  left: -14px;
+  top: -6px;
+  font-size: 24px; /* Adjust to make the icon bigger */
+}
+
+.instructions li {
+  margin-bottom: 5px;
+}
