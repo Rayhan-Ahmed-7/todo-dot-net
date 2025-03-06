@@ -26,10 +26,9 @@ public class PdfController : ControllerBase
             {
                 cssUrl = $"file://{Path.Combine(wwwRootPath, "assets/css/bangla-id-card-style.css")}",
                 logoUrl = $"file://{Path.Combine(wwwRootPath, "assets/logo/logo.png")}",
-                photoUrl = $"file://{Path.Combine(wwwRootPath, "assets/employee/employee_profile.jpeg")}"
+                photoUrl = $"file://{Path.Combine(wwwRootPath, "assets/employee/employee_profile.jpeg")}",
+                fontUrl = $"file://{Path.Combine(wwwRootPath, "assets/fonts/SutonnyMJ/SutonnyOMJ.ttf")}",
             };
-
-            Console.WriteLine(model.cssUrl);
 
             // Handlebars template as a string
             var templateFilePath = "id-cards/bangjin/templates/id-card-bangla.html";

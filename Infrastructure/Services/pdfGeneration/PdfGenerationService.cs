@@ -1,6 +1,8 @@
 using HandlebarsDotNet;
 using PuppeteerSharp;
 using Application.Interfaces;
+using Azure;
+using PuppeteerSharp.Media;
 
 namespace Infrastructure.Services
 {
@@ -28,14 +30,34 @@ namespace Infrastructure.Services
             // Step 1: Render HTML using Handlebars
             var compiledTemplate = Handlebars.Compile(template);
             var htmlContent = compiledTemplate(data);
-            Console.WriteLine(htmlContent);
             // Step 2: Launch Puppeteer and generate the PDF
             await new BrowserFetcher().DownloadAsync();
-            using (var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true }))
+            using (var browser = await Puppeteer.LaunchAsync(new LaunchOptions
+            {
+                Headless = true,
+                Args = new[] { "--no-sandbox" } // For Linux environments
+            }))
             {
                 var page = await browser.NewPageAsync();
-                await page.SetContentAsync(htmlContent);
-                var pdfBytes = await page.PdfDataAsync();
+                // To enable PuppeteerSharp access local files you need to manually go to a local file first
+                await page.GoToAsync($"file://{newTemplateFilePath}");
+                await page.SetContentAsync(htmlContent, new NavigationOptions
+                {
+                    WaitUntil = new[] { WaitUntilNavigation.Networkidle0 }
+                });
+                var pdfBytes = await page.PdfDataAsync(new PdfOptions()
+                {
+                    PrintBackground = true,
+                    Format = PaperFormat.A4,
+                    DisplayHeaderFooter = true,
+                    MarginOptions = new MarginOptions
+                    {
+                        Top = "0mm",
+                        Bottom = "0mm",
+                        Left = "0mm",
+                        Right = "0mm"
+                    },
+                });
 
                 return pdfBytes;
             }
