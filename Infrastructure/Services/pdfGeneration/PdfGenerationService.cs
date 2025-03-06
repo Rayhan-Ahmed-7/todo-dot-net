@@ -1,7 +1,6 @@
 using HandlebarsDotNet;
 using PuppeteerSharp;
 using Application.Interfaces;
-using Azure;
 using PuppeteerSharp.Media;
 
 namespace Infrastructure.Services
